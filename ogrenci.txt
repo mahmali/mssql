@@ -1,0 +1,201 @@
+create database ogrenci
+go
+use ogrenci
+create table bolum (bolkod smallint primary key, bol_adi char(15))
+go
+create table unvanlar (unvan_no tinyint primary key, unvan_adi
+char(20))
+go
+create table hocalar (h_ID tinyint identity(1,1) primary key, h_adi
+char(20), h_soyadi char(20), unvani tinyint foreign key references
+unvanlar(unvan_no), top_ders_saati tinyint)
+go
+create table dersler (op_kod smallint primary key, ders_kod
+char(10), ders_adi char(20), donem tinyint, check(donem in(1,2)),
+teori tinyint, pratik tinyint, hocasi tinyint foreign key references
+hocalar(h_ID))
+go
+create table memleket (tr_kod tinyint primary key, check(tr_kod
+between 01 and 99), memleket_adi char(15) not null, tel_kod smallint )
+go
+create table ogrenci (no int primary key, adi char(15) not null,
+soyadi char(15) not null, bolkod smallint foreign key references
+bolum(bolkod), sinif tinyint, check(sinif in(1,2,3,4,5,6,7,8,9)), h_ID
+tinyint foreign key references hocalar(h_ID), dogum_tarihi datetime
+not  null, memleket tinyint foreign key references memleket(tr_kod))
+go
+create table notlar (no int foreign key references ogrenci(no),
+op_kod smallint foreign key references dersler(op_kod), vize tinyint,
+check(vize between 0 and 100), mazeret tinyint, check(mazeret between
+0 and 100), final tinyint, check(final between 0 and 100),but tinyint,
+check(but between 0 and 100))
+go
+insert into bolum values (530,'Elektronik');
+insert into bolum values (531,'Bilgisayar');
+insert into bolum values (532,'Metal');
+insert into bolum values (533,'Talasli');
+insert into bolum values (534,'Makine');
+insert into bolum values (535,'Yapi');
+insert into bolum values (536,'Yapi-Resim');
+
+insert into unvanlar values(1,'Prof.Dr.');
+insert into unvanlar values(2,'Doç.Dr.'); 
+insert into unvanlar values(3,'Yrd.Doç.'); 
+insert into unvanlar values(4,'Ögr.Gör.Dr'); 
+insert into unvanlar values(5,'Ögr.Gör.');
+insert into unvanlar values(6,'Ars.Gör.');  
+ 
+insert into hocalar values ('Asaf','Varol',1,20);
+insert into hocalar values ('Muammer','Gökbulut',1,20);
+insert into hocalar values ('Hakan','Akpolat',1,20);
+insert into hocalar values ('Hanifi','Güldemir',1,20);
+insert into hocalar values ('Ibrahim','Türkoglu',2,18);
+insert into hocalar values ('Mehmet','Gedikpinar',3,17);
+insert into hocalar values ('Servet','Tuncer',3,17);
+insert into hocalar values ('Engin','Avci',3,17);
+insert into hocalar values ('Davut','Hanbay',3,17);
+insert into hocalar values ('Abdulkadir','Sengür',3,17);
+insert into hocalar values ('Nurhayat','Varol',5,15);
+insert into hocalar values ('Cafer','Bal',4,16);
+insert into hocalar values ('Erkan','Tanyildizi',4,16);
+insert into hocalar values ('Murat','Karabatak',5,15);
+insert into hocalar values ('Ferhat','Baðçacý',6,12);
+insert into hocalar values ('Korhan','Kayisli',6,12);
+
+insert into dersler values (101,'tde 102','Türk dili',2,2,0,12);
+insert into dersler values (104,'tdi 132','Ingilizce',2,2,0,16);
+insert into dersler values (114,'bil 166','Nesne yön. prg. gr.',2,2,2,14);
+insert into dersler values (115,'bil 168','Bilgisayar donanimi',2,2,0,5);
+insert into dersler values (118,'egt 162','Okul deneyimi',2,1,4,3);
+insert into dersler values (151,'tde 101','Türk dili',2,2,0,12);
+insert into dersler values (155,'bil 161','Temel bil.tek.kul.',1,2,2,11);
+insert into dersler values (164,'mat 167','Matematik',1,3,0,12);
+insert into dersler values (167,'egt 171','Ögrt.meslegine giris',1,3,0,3);
+insert into dersler values (218,'elt 292','Elk.devreler',2,3,2,6);
+insert into dersler values (219,'bil 282','Meslek mat.',2,3,0,1);
+insert into dersler values (222,'bil 288','Bil.prg. 2',2,2,2,13);
+insert into dersler values (270,'bil 285','Mantik devreleri',1,3,0,4);
+insert into dersler values (271,'bil 287','Bil.prg.',1,3,2,15);
+insert into dersler values (274,'elt 291','Devre analizi',1,3,2,7);
+insert into dersler values (317,'egt 372','Sinif yönetimi',2,2,2,8);
+insert into dersler values (324,'bil 384','Çoklu ortam',2,2,2,11);
+insert into dersler values (326,'bil 388','SQL',2,3,2,14);
+insert into dersler values (371,'bil 383','Teknik iletisim',1,2,0,11);
+insert into dersler values (372,'bil 385','Mikro. mimarisi',1,3,2,5);
+insert into dersler values (373,'bil 387','Veri yapilari',1,3,0,13);
+insert into dersler values (374,'elt 395','Ölçme',1,2,2,6);
+insert into dersler values (375,'bil 391','Isletim sistemleri',1,3,2,10);
+insert into dersler values (421,'egt 472','Rehberlik',2,3,0,9);
+insert into dersler values (433,'bil 484','Bil. aglarý',2,3,0,8);
+insert into dersler values (434,'bil 486','Web prog.',2,3,2,13);
+insert into dersler values (436,'bil 490','Proje 2',2,0,2,8);
+insert into dersler values (467,'egt 471','Okul deneyimi',1,1,4,9);
+insert into dersler values (481,'bil 483','Bil. aglari2',1,3,2,1);
+insert into dersler values (482,'bil 485','Web tasarimi',1,3,2,14);
+insert into dersler values (483,'bil 485','Yapay zeka',1,3,0,13);
+insert into dersler values (484,'bil 489','Proje',1,0,2,8);
+
+insert into memleket values(1,'Adana',322);
+insert into memleket values(2,'Adiyaman',416);
+insert into memleket values(3,'Afyon',272);
+insert into memleket values(4,'Agri',472);
+insert into memleket values(5,'Amasya',382);
+insert into memleket values(6,'Ankara',312);
+insert into memleket values(7,'Antalya',242);
+insert into memleket values(8,'Artvin',466);
+insert into memleket values(9,'Aydin',256);
+insert into memleket values(10,'Balikesir',266);
+insert into memleket values(11,'Bilecik',228);
+insert into memleket values(12,'Bingöl',426);
+insert into memleket values(13,'Bitlis',434);
+insert into memleket values(14,'Bolu',374);
+insert into memleket values(15,'Burdur',248);
+insert into memleket values(16,'Bursa',224);
+insert into memleket values(17,'Çanakkale',286);
+insert into memleket values(18,'Çankiri',376);
+insert into memleket values(19,'Çorum',364);
+insert into memleket values(20,'Denizli',258);
+insert into memleket values(21,'Diyarbakir',412);
+insert into memleket values(22,'Edirne',284);
+insert into memleket values(23,'Elazig',424);
+insert into memleket values(24,'Erzincan',446);
+insert into memleket values(25,'Erzurum',442);
+insert into memleket values(26,'Eskisehir',222);
+insert into memleket values(27,'Gaziantep',342);
+insert into memleket values(28,'Giresun',454);
+insert into memleket values(29,'Gümüshane',456);
+insert into memleket values(30,'Hakkari',438);
+insert into memleket values(31,'Hatay',326);
+insert into memleket values(32,'Isparta',246);
+insert into memleket values(33,'Içel',324);
+insert into memleket values(34,'Istanbul',216);
+insert into memleket values(35,'Izmir',232);
+insert into memleket values(36,'Kars',474);
+insert into memleket values(37,'Kastamonu',366);
+insert into memleket values(38,'Kayseri',352);
+insert into memleket values(39,'Kirklareli',388);
+insert into memleket values(40,'Kirsehir',386);
+insert into memleket values(41,'Kocaeli',262);
+insert into memleket values(42,'Konya',332);
+insert into memleket values(43,'Kütahya',274);
+insert into memleket values(44,'Malatya',422);
+insert into memleket values(45,'Manisa',236);
+insert into memleket values(46,'K.Maras',344);
+insert into memleket values(47,'Mardin',482);
+insert into memleket values(48,'Mugla',252);
+insert into memleket values(49,'Mus',436);
+insert into memleket values(50,'Nevsehir',384);
+insert into memleket values(51,'Nigde',388);
+insert into memleket values(52,'Ordu',452);
+insert into memleket values(53,'Rize',464);
+insert into memleket values(54,'Sakarya',264);
+insert into memleket values(55,'Samsun',362);
+insert into memleket values(56,'Siirt',484);
+insert into memleket values(57,'Sinop',368);
+insert into memleket values(58,'Sivas',346);
+insert into memleket values(59,'Tekirdag',282);
+insert into memleket values(60,'Tokat',356);
+insert into memleket values(61,'Trabzon',462);
+insert into memleket values(62,'Tunceli',428);
+insert into memleket values(63,'Sanliurfa',414);
+insert into memleket values(64,'Usak',276);
+insert into memleket values(65,'Van',432);
+insert into memleket values(66,'Yozgat',354);
+insert into memleket values(67,'Zonguldak',372);
+insert into memleket values(68,'Aksaray',382);
+insert into memleket values(69,'Bayburt',458);
+insert into memleket values(70,'Karaman',338);
+insert into memleket values(71,'Kirikkale',318);
+insert into memleket values(72,'Batman',488);
+insert into memleket values(73,'Sirnak',486);
+insert into memleket values(74,'Bartin',378);
+insert into memleket values(75,'Ardahan',478);
+insert into memleket values(76,'Igdir',476);
+insert into memleket values(77,'Yalova',226);
+insert into memleket values(78,'Karabük',370);
+insert into memleket values(79,'Kilis',348);
+insert into memleket values(80,'Osmaniye',328);
+insert into memleket values(81,'Düzce',111);
+
+insert into ogrenci  values(5530535,'Feyza','Uçan',530,4,7,'11.16.1985',55);
+insert into ogrenci  values(5531519,'Betül','Cebe',531,4,5,'06.01.1986',5);
+insert into ogrenci  values(6532510,'Leyla','Korkmaz',532,3,1,'09.11.1986',1);
+insert into ogrenci  values(6532518,'Ali','Yilmaz',532,3,1,'08.13.1987',40);
+insert into ogrenci  values(6535501,'Bilal','Baymaz','535',3,8,'01.21.1987',28);
+insert into ogrenci  values(7536511,'Aytül','Çetinkaya',536,2,13,'09.05.1987',70);
+insert into ogrenci  values(7536521,'Veli','Usak',536,2,13,'03.07.1988',21);
+insert into ogrenci  values(7536545,'Cengiz','Günes',536,2,13,'11.04.1988',66);
+
+insert into notlar values(5530535,421,NULL,80,6,80);
+insert into notlar values(5530535,433,38,NULL,12,67);
+insert into notlar values(5531519,421,40,NULL,96,NULL);
+insert into notlar values(5531519,433,63,NULL,90,NULL);
+insert into notlar values(6532510,371,NULL,45,67,NULL);
+insert into notlar values(6532510,372,60,NULL,88,NULL);
+insert into notlar values(6532510,373,11,NULL,45,78);
+insert into notlar values(7536545,271,12,NULL,30,89);
+insert into notlar values(7536545,274,34,NULL,60,NULL);
+insert into notlar values(7536521,222,NULL,90,65,NULL);
+insert into notlar values(7536521,274,21,NULL,23,67);
+insert into notlar values(7536511,218,98,NULL,54,NULL);
+insert into notlar values(7536511,274,53,NULL,40,56);

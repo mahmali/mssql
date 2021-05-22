@@ -1,31 +1,30 @@
-                                        /*veri tabanı ve yönetim sisteleri final çalışma sayfası*/
-
+                                
 use ogrenci
 
 declare @sayi1 int,@sayi2 int, @toplam int
 set @sayi1=10
 set @sayi2=9
 set @toplam=@sayi1+@sayi2
-print @toplam                     /*verien iki sayının toplamı bulma*/
+print @toplam                     /*verien iki sayÄ±nÄ±n toplamÄ± bulma*/
 
 declare @sayi3 int
 select @sayi3=100
-print @sayi3                     /*aynı işlem set yerine select ileda yapılabilir*/
+print @sayi3                     /*aynÄ± iÅŸlem set yerine select ileda yapÄ±labilir*/
 
-declare @enyüksek int
-select @enyüksek=max(final) from notlar
-select @enyüksek as "en büyük not" /*printsiz böylede yazılabilir.*/      /*hocalar tablosundaki en büyük finalı verir*/
+declare @enyÃ¼ksek int
+select @enyÃ¼ksek=max(final) from notlar
+select @enyÃ¼ksek as "en bÃ¼yÃ¼k not" /*printsiz bÃ¶ylede yazÄ±labilir.*/      /*hocalar tablosundaki en bÃ¼yÃ¼k finalÄ± verir*/
 
-select *from sys.sysmessages       /*verilen tüm hataların listeler*/
+select *from sys.sysmessages       /*verilen tÃ¼m hatalarÄ±n listeler*/
 
-select 5/1 /*direk böylede 4 işlem yapılabilir*/
+select 5/1 /*direk bÃ¶ylede 4 iÅŸlem yapÄ±labilir*/
 
-delete from notlar where final>95   /*silme işlemi kalıcıdır ana listeden siler*/
-select @@ROWCOUNT                   /*kaç tane eleman sildigini verir*/
+delete from notlar where final>95   /*silme iÅŸlemi kalÄ±cÄ±dÄ±r ana listeden siler*/
+select @@ROWCOUNT                   /*kaÃ§ tane eleman sildigini verir*/
 
 declare @deger varchar(90)
-set @deger='mıhamemd ali akkkaya'
-/*go*/                              /*araya go gelir ise hata verir, go tabloyu ikiye ayırır çünki*/
+set @deger='mÄ±hamemd ali akkkaya'
+/*go*/                              /*araya go gelir ise hata verir, go tabloyu ikiye ayÄ±rÄ±r Ã§Ã¼nki*/
 print @deger
 
 declare @personel table(
@@ -34,89 +33,89 @@ ad varchar(90) not null,
 telefon varchar(15) )
 insert into @personel values ('mahmlai',232323)
 insert into @personel values ('mahmldfdfai',2322323323)
-select *from @personel order by ad                             /*declare ile liste oluşturma ve listedeki elemanları gösterme*/
+select *from @personel order by ad                             /*declare ile liste oluÅŸturma ve listedeki elemanlarÄ± gÃ¶sterme*/
 
-declare @eklenenler table(ad varchar(18),soyad varchar(38),maas money)   /*eklenenler diye tablo oluşturma*/
-insert into personel                                                     /*aktarılacak yere kalıcı olrak deger ekler*/
-output inserted.ad, inserted.soyad,inserted.maas                         /*aktarılacak degerler*/
-into @eklenenler                                                         /*aktarılacakların tutuldugu yer*/
+declare @eklenenler table(ad varchar(18),soyad varchar(38),maas money)   /*eklenenler diye tablo oluÅŸturma*/
+insert into personel                                                     /*aktarÄ±lacak yere kalÄ±cÄ± olrak deger ekler*/
+output inserted.ad, inserted.soyad,inserted.maas                         /*aktarÄ±lacak degerler*/
+into @eklenenler                                                         /*aktarÄ±lacaklarÄ±n tutuldugu yer*/
 values ('eslem','pazar',88)                                              /*eklene degereler*/
-select *from @eklenenler                                                 /*tablo degişkeninin içeriginin listesi*/
+select *from @eklenenler                                                 /*tablo degiÅŸkeninin iÃ§eriginin listesi*/
 
-declare @silinenler table(                             /*silinecek degerlerin konulacagı deger tablosu oluşturur*/
+declare @silinenler table(                             /*silinecek degerlerin konulacagÄ± deger tablosu oluÅŸturur*/
 	ad varchar(20),
 	soyad varchar(20),
 	maas varchar (20)    )
 delete from personel                                   /*silinecek tablo ismi istenir*/
 	output deleted.ad,deleted.soyad,deleted.maas
 	into @silinenler                                     
-where maas<31                                          /*tablodaki silineceklerin şarı burada tanılanır*/
-select *from @silinenler                               /*silinen degerleri alt tarafta gösterir*/
-select count(*) from @silinenler                               /*silinen degerlerin sayısı verir*/
+where maas<31                                          /*tablodaki silineceklerin ÅŸarÄ± burada tanÄ±lanÄ±r*/
+select *from @silinenler                               /*silinen degerleri alt tarafta gÃ¶sterir*/
+select count(*) from @silinenler                               /*silinen degerlerin sayÄ±sÄ± verir*/
 
 /*if exists(select *from personel where maas<90
-	print 'maası 90 dan küçük olan degerler'*/            /*olmadı*/
+	print 'maasÄ± 90 dan kÃ¼Ã§Ã¼k olan degerler'*/            /*olmadÄ±*/
 
-if (select min(maas) from personel)>100                 /*verien şart*/
-	print 'maası 100 büyük olan bir maas yok'
+if (select min(maas) from personel)>100                 /*verien ÅŸart*/
+	print 'maasÄ± 100 bÃ¼yÃ¼k olan bir maas yok'
 else 
-	select ad,soyad,maas from personel                  /*yazdırılacak kelimeler*/
+	select ad,soyad,maas from personel                  /*yazdÄ±rÄ±lacak kelimeler*/
 	where maas<100
 
-select count(*)from ogrenci                            /*ögrenci sayısını verir*/
+select count(*)from ogrenci                            /*Ã¶grenci sayÄ±sÄ±nÄ± verir*/
 
-declare @o_sayısı int                                  /*degişken tanımlama*/      
-select @o_sayısı=count(*)from ogrenci                  /*degişkene deger atama*/ 
-print @o_sayısı                                        /*degişkeni yazdırma*/
+declare @o_sayÄ±sÄ± int                                  /*degiÅŸken tanÄ±mlama*/      
+select @o_sayÄ±sÄ±=count(*)from ogrenci                  /*degiÅŸkene deger atama*/ 
+print @o_sayÄ±sÄ±                                        /*degiÅŸkeni yazdÄ±rma*/
 
-use okul                                                /*tablo tanımlama*/
-select isim, cinsiyet=                                  /*gösterilecek sütun listesi*/
-	case cinsiyet                                       /*case işlem yapılacak sütun şeçme*/
-		when 'E' then 'erkek'                           /*işlem tanımlama E leri erkek olrak degiştirme*/
-		when 'K' then 'kız'
+use okul                                                /*tablo tanÄ±mlama*/
+select isim, cinsiyet=                                  /*gÃ¶sterilecek sÃ¼tun listesi*/
+	case cinsiyet                                       /*case iÅŸlem yapÄ±lacak sÃ¼tun ÅŸeÃ§me*/
+		when 'E' then 'erkek'                           /*iÅŸlem tanÄ±mlama E leri erkek olrak degiÅŸtirme*/
+		when 'K' then 'kÄ±z'
  	 end
-from müsterilerID                                       /*işlme yapılacak tablo*/
+from mÃ¼sterilerID                                       /*iÅŸlme yapÄ±lacak tablo*/
 
 use ogrenci
 select ad,soyad,                       
 	case	
-		when maas is null then 0                        /*maası null olan degerleri 0 yapar*/
-		else maas                                       /*null degil ise diger maas degerini yazdırır*/
+		when maas is null then 0                        /*maasÄ± null olan degerleri 0 yapar*/
+		else maas                                       /*null degil ise diger maas degerini yazdÄ±rÄ±r*/
 	end
-from personel                                           /*işlem ana tabloya işlemez*/
+from personel                                           /*iÅŸlem ana tabloya iÅŸlemez*/
 
 select *from personel
 
-update personel                                          /*update oldugu için ana listede işlem yapar*/
-set maas=(                                               /*işlem yapılacak sütun belirlenir*/
+update personel                                          /*update oldugu iÃ§in ana listede iÅŸlem yapar*/
+set maas=(                                               /*iÅŸlem yapÄ±lacak sÃ¼tun belirlenir*/
 	case
-		when maas<100 then (maas+(maas*20)/100)          /*işlem ler*/
+		when maas<100 then (maas+(maas*20)/100)          /*iÅŸlem ler*/
 		when maas>100 and maas<200 then maas-((maas*15)/100)
 		else maas+(maas)
-	end)                                                 /*case işlemini bitir*/
+	end)                                                 /*case iÅŸlemini bitir*/
 	
-declare @sayac int                                       /*deger tanımlama*/
-set @sayac=1											/*degere sayı atama*/
+declare @sayac int                                       /*deger tanÄ±mlama*/
+set @sayac=1											/*degere sayÄ± atama*/
 while @sayac<=5
-begin                                                   /*döngü başlangıç noktası belirleme*/
-	print (cast(@sayac as varchar(10)) + 'karesi:' + cast(@sayac*@sayac as varchar(10)))         /*işlemler*/
-		set @sayac=@sayac+1                             /*döngü sayacını arttırma*/
-end                                                     /*dönğüyü bitirme*/
+begin                                                   /*dÃ¶ngÃ¼ baÅŸlangÄ±Ã§ noktasÄ± belirleme*/
+	print (cast(@sayac as varchar(10)) + 'karesi:' + cast(@sayac*@sayac as varchar(10)))         /*iÅŸlemler*/
+		set @sayac=@sayac+1                             /*dÃ¶ngÃ¼ sayacÄ±nÄ± arttÄ±rma*/
+end                                                     /*dÃ¶nÄŸÃ¼yÃ¼ bitirme*/
 
 declare @sayac smallint
 set @sayac =1 
 yenile:                                                     /*goto nin gidecegi deger*/
-print 'sayac degeri:' + cast(@sayac as varchar(1))          /*yapılan işlem*/
+print 'sayac degeri:' + cast(@sayac as varchar(1))          /*yapÄ±lan iÅŸlem*/
 set @sayac=@sayac+1
-while @sayac<=4                                             /*dongü*/                                
+while @sayac<=4                                             /*dongÃ¼*/                                
 	goto yenile
 
-declare @deger int                                  /*kısa bir örnek sadece returm mantığını anlamaya yönelikti*/
+declare @deger int                                  /*kÄ±sa bir Ã¶rnek sadece returm mantÄ±ÄŸÄ±nÄ± anlamaya yÃ¶nelikti*/
 declare @deger2 int
 set @deger=123
 if @deger2 is null
 begin 
-	print 'deger degişkeni null'
+	print 'deger degiÅŸkeni null'
 	return
 end
 else
@@ -126,55 +125,55 @@ end
 if @deger2 is not null
 	print @deger2
 
-waitfor time'12:15:00'          /*kodları verien saat geldiginde gerçekleştir*/
-waitfor delay '00:15:00'        /*15 dk sonra kodları çalıştır*/
+waitfor time'12:15:00'          /*kodlarÄ± verien saat geldiginde gerÃ§ekleÅŸtir*/
+waitfor delay '00:15:00'        /*15 dk sonra kodlarÄ± Ã§alÄ±ÅŸtÄ±r*/
 
 waitfor delay '00:00:10'        /*personel tablosunu 10 dk sonra ekrana getir*/
 select *from personel
 
-begin try                       /*hata mesajı kullanma örnekleri ile*/
+begin try                       /*hata mesajÄ± kullanma Ã¶rnekleri ile*/
 	select 1/0
 end try
-begin catch                     /*try catch yapısı*/
+begin catch                     /*try catch yapÄ±sÄ±*/
 	select
-		ERROR_NUMBER() as "hata no",          /*from ersonal yazılsa personal olavagını anlayamaz hata da veremez*/
-		ERROR_SEVERITY() as öncelik,
-		ERROR_LINE() as hataSatırı,
-		ERROR_MESSAGE() as hataMesajı
+		ERROR_NUMBER() as "hata no",          /*from ersonal yazÄ±lsa personal olavagÄ±nÄ± anlayamaz hata da veremez*/
+		ERROR_SEVERITY() as Ã¶ncelik,
+		ERROR_LINE() as hataSatÄ±rÄ±,
+		ERROR_MESSAGE() as hataMesajÄ±
 end catch
 
-create table urunler(                     /*tablo oluşturma*/
+create table urunler(                     /*tablo oluÅŸturma*/
 	urun_no int not null,
     ad nvarchar(10))
     
-create table fiyat(                      /*tablo oluşturma*/
+create table fiyat(                      /*tablo oluÅŸturma*/
 	urun_no int null,
 	fiyat money null)
 
 declare @tablo varchar(20)
-set @tablo ='hocalar'                    /*tablonun içine hocalar kelimesi atanır*/
-execute ('select *from '+@tablo)         /*select *from hocalar       olur aslında arka planda*/
+set @tablo ='hocalar'                    /*tablonun iÃ§ine hocalar kelimesi atanÄ±r*/
+execute ('select *from '+@tablo)         /*select *from hocalar       olur aslÄ±nda arka planda*/
 
 declare @deger varchar(10)
 declare @sorgu varchar(max)
 set @deger='hocalar'
 set @sorgu='select * from '+@deger       
-execute (@sorgu)                         /*execute kullanımı biraz daha gelişmş hali sadece*/
+execute (@sorgu)                         /*execute kullanÄ±mÄ± biraz daha geliÅŸmÅŸ hali sadece*/
 
-create procedure ortalama2(@a int=0,@b int =0)      /*ortalama isminde bir prosedur oluşturuldu*/
+create procedure ortalama2(@a int=0,@b int =0)      /*ortalama isminde bir prosedur oluÅŸturuldu*/
 as
-return (@a+@b)/2                                     /*prosedure nin işlmi yapıp geri dönderecegi işlemler tanıtıldı*/
+return (@a+@b)/2                                     /*prosedure nin iÅŸlmi yapÄ±p geri dÃ¶nderecegi iÅŸlemler tanÄ±tÄ±ldÄ±*/
 go
 declare @sonuc decimal(10,2)
-exec @sonuc=ortalama2 10,5                           /*işleme girecek olan verler girildi*/
-print ('ortalama:'+cast(@sonuc as varchar(12)))      /*ve prosedür çalıştırılıp ekrana yazıldı*/
+exec @sonuc=ortalama2 10,5                           /*iÅŸleme girecek olan verler girildi*/
+print ('ortalama:'+cast(@sonuc as varchar(12)))      /*ve prosedÃ¼r Ã§alÄ±ÅŸtÄ±rÄ±lÄ±p ekrana yazÄ±ldÄ±*/
 /*
-create procedure ogrencibul(                     /*prosedure oluşturma*/
-	@numara varchar(20)=null,                   /*giriş, alınacak deger*/
-	@adi varchar(30)=null output,                /*output olanlar çıkış verilecek degerleer*/
+create procedure ogrencibul(                     /*prosedure oluÅŸturma*/
+	@numara varchar(20)=null,                   /*giriÅŸ, alÄ±nacak deger*/
+	@adi varchar(30)=null output,                /*output olanlar Ã§Ä±kÄ±ÅŸ verilecek degerleer*/
 	@tarih smalldatetime output,
 	@plaka int output) 
-select *from ogrenci where no=6532518            /*ögrenci bilgilerin alma*/
+select *from ogrenci where no=6532518            /*Ã¶grenci bilgilerin alma*/
 as
 if @numara=is not null
 	select @adi=adi,
@@ -182,7 +181,7 @@ if @numara=is not null
 		   @plaka=memleket
 	from ogrenci where no=6532518
 else
-	print 'verilen numaraya ait öğrenci bulunamadı'
+	print 'verilen numaraya ait Ã¶ÄŸrenci bulunamadÄ±'
 	go*/
 
 /*
@@ -219,9 +218,9 @@ SELECT * FROM ogrenci WHERE h_ID IN(7,12)
 SELECT * FROM notlar WHERE no IN ( SELECT no FROM ogrenci WHERE bolkod=531)
 SELECT adi, soyadi, no,h_ID FROM ogrenci WHERE h_ID IN (1,3,5,7)
 
-select *from ogrenci where no in (select no from notlar where ıd in(1,2,3,4,5,6))
+select *from ogrenci where no in (select no from notlar where Ä±d in(1,2,3,4,5,6))
 
-select adi,soyadi,memleket*2 as memleketin_2_katı from ogrenci where no in(select no from notlar where final =(select max(final) from notlar))
+select adi,soyadi,memleket*2 as memleketin_2_katÄ± from ogrenci where no in(select no from notlar where final =(select max(final) from notlar))
 select sum(sinif)-sum(h_ID) as 'fark' from ogrenci where sinif=2;
 SELECT AVG(memleket) FROM ogrenci WHERE sinif=4; 
 select count(adi) from ogrenci
